@@ -1,6 +1,7 @@
 package com.airbnbserver.services;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,5 +23,10 @@ public class UserService {
         User newUser = new User(userDto);
 
         return this.repository.save(newUser);
+    }
+
+    public User getByUuid(UUID userUuid) {
+
+        return this.repository.findUserByUuid(userUuid);
     }
 }
