@@ -38,16 +38,17 @@ public class Accommodation {
 
     private String cep;
     private String address;
-    private String complemet;
-    private String daily_fee;
+    private String complement;
+    private Float daily_fee;
     private String description;
     private String capacity;
 
-    public Accommodation(AccommodationDTO accommodationDTO) {
+    public Accommodation(AccommodationDTO accommodationDTO, User host) {
         this.uuid = UUID.randomUUID();
+        this.host = host;
         this.address = accommodationDTO.address();
         this.cep = accommodationDTO.cep();
-        this.complemet = accommodationDTO.complemet();
+        this.complement = accommodationDTO.complement();
         this.daily_fee = accommodationDTO.daily_fee();
         this.description = accommodationDTO.description();
         this.capacity = accommodationDTO.capacity();

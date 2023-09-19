@@ -1,13 +1,13 @@
 package com.airbnbserver.domain.dtos;
 
-import com.airbnbserver.domain.entities.User;
+import java.util.UUID;
 
 public record AccommodationDTO(
-        User host,
+        UUID hostUuid,
         String cep,
         String address,
-        String complemet,
-        String daily_fee,
+        String complement,
+        Float daily_fee,
         String description,
         String capacity) {
 
