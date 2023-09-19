@@ -16,8 +16,12 @@ public class AccommodationService {
     @Autowired
     private AccommodationRepository repository;
 
+    @Autowired
+    private UserService userService;
+
     public Accommodation createAccommodation(AccommodationDTO accommodationDto) {
-        Accommodation newAccommodation = new Accommodation(accommodationDto);
+        User host = this.userService.getByUuid(accommodationDto.hostUuid());
+        Accommodation newAccommodation = new Accommodation(accommodationDto, host);
 
         return this.repository.save(newAccommodation);
     }
@@ -27,8 +31,9 @@ public class AccommodationService {
         return this.repository.findAll();
     }
 
-    public List<Accommodation> getByHost(User host) {
+    public List<Accommodation> getByHost(User host) throws Exception {
 
-        return this.repository.findAccommodationByHost(host);
+        return this.repository.findAccommodationByHost(host)
+                .orElseThrow(() -> new Exception("Usuário não possui acomodações cadastradas"));
     }
 }
