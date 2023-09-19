@@ -1,12 +1,14 @@
 package com.airbnbserver.controllers;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -41,11 +43,12 @@ public class UserController {
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
 
-    @GetMapping(":uuid/accommodations")
-    public List<Accommodation> getAccommodations(@RequestBody UUID userUuid) {
+    @GetMapping("{uuid}/accommodations")
+    public ResponseEntity<List<Accommodation>> getHostAccommodations(@PathVariable("uuid") UUID userUuid)
+            throws Exception {
         User host = this.service.getByUuid(userUuid);
 
-        return this.accommodationService.getByHost(host);
+        return new ResponseEntity<>(this.accommodationService.getByHost(host), HttpStatus.OK);
     }
 
 }
