@@ -36,15 +36,14 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> create(@RequestBody UserDTO userDto) {
+    public ResponseEntity<User> create(@RequestBody UserDTO userDto) throws Exception {
         User newUser = this.service.createUser(userDto);
 
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
 
     @GetMapping("{uuid}/accommodations")
-    public ResponseEntity<List<Accommodation>> getHostAccommodations(@PathVariable("uuid") UUID userUuid)
-            throws Exception {
+    public ResponseEntity<List<Accommodation>> getHostAccommodations(@PathVariable("uuid") UUID userUuid) throws Exception {
         User host = this.service.getByUuid(userUuid);
 
         return new ResponseEntity<>(this.accommodationService.getByHost(host), HttpStatus.OK);
