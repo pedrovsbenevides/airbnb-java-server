@@ -16,17 +16,63 @@ public class UserService {
     private UserRepository repository;
 
     public List<User> getAllUsers() {
-        return repository.findAll();
+        return this.repository.findAll();
     }
 
-    public User createUser(UserDTO userDto) {
-        User newUser = new User(userDto);
+    public User createUser(UserDTO userData) throws Exception {
+        User newUser = new User(userData);
 
-        return this.repository.save(newUser);
+        this.validateCPF(userData);
+        this.validateEmail(userData);
+
+        try {
+
+            return this.repository.save(newUser);
+        } catch (Exception error) {
+            throw error;
+        }
+
     }
 
-    public User getByUuid(UUID userUuid) {
+    public User createUser(User newUser) throws Exception {
 
-        return this.repository.findUserByUuid(userUuid);
+        this.validateCPF(newUser);
+        this.validateEmail(newUser);
+
+        try {
+
+            return this.repository.save(newUser);
+        } catch (Exception error) {
+            throw error;
+        }
+    }
+
+    public User getByUuid(UUID userUuid) throws Exception {
+
+        return this.repository.findUserByUuid(userUuid).orElseThrow(() -> new Exception("Usuário não encontrado"));
+    }
+
+    private void validateEmail(UserDTO userData) throws Exception {
+        if (!this.repository.existsUserByEmail(userData.email())) {
+            throw new Exception("Ja existe um usuário registrado com essas informações");
+        }
+    }
+
+    private void validateCPF(UserDTO userData) throws Exception {
+        if (!this.repository.existsUserByCpf(userData.cpf())) {
+            throw new Exception("Ja existe um usuário registrado com essas informações");
+        }
+    }
+
+    private void validateEmail(User user) throws Exception {
+        if (!this.repository.existsUserByEmail(user.getEmail())) {
+            throw new Exception("Já existe um usuário registrado com essas informações");
+        }
+    }
+
+    private void validateCPF(User user) throws Exception {
+        if (!this.repository.existsUserByCpf(user.getCpf())) {
+            throw new Exception("Já existe um usuário registrado com essas informações");
+        }
     }
 }
