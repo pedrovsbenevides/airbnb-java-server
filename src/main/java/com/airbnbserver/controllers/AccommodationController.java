@@ -29,7 +29,7 @@ public class AccommodationController {
     }
 
     @PostMapping
-    public ResponseEntity<Accommodation> create(@RequestBody AccommodationDTO data) {
+    public ResponseEntity<Accommodation> create(@RequestBody AccommodationDTO data) throws Exception {
 
         return new ResponseEntity<>(this.service.createAccommodation(data), HttpStatus.OK);
     }

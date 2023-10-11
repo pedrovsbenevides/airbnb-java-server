@@ -19,7 +19,7 @@ public class AccommodationService {
     @Autowired
     private UserService userService;
 
-    public Accommodation createAccommodation(AccommodationDTO accommodationDto) {
+    public Accommodation createAccommodation(AccommodationDTO accommodationDto) throws Exception {
         User host = this.userService.getByUuid(accommodationDto.hostUuid());
         Accommodation newAccommodation = new Accommodation(accommodationDto, host);
 
