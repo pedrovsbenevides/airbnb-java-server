@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.airbnbserver.domain.dtos.UserDTO;
 import com.airbnbserver.domain.entities.User;
 import com.airbnbserver.domain.repositories.UserRepository;
+import com.airbnbserver.exceptions.BusinessException;
 
 @Service
 public class UserService {
@@ -54,25 +55,25 @@ public class UserService {
 
     private void validateEmail(UserDTO userData) throws Exception {
         if (!this.repository.existsUserByEmail(userData.email())) {
-            throw new Exception("Ja existe um usuário registrado com essas informações");
+            throw new BusinessException("Já existe um usuário registrado com essas informações");
         }
     }
 
     private void validateCPF(UserDTO userData) throws Exception {
         if (!this.repository.existsUserByCpf(userData.cpf())) {
-            throw new Exception("Ja existe um usuário registrado com essas informações");
+            throw new BusinessException("Já existe um usuário registrado com essas informações");
         }
     }
 
     private void validateEmail(User user) throws Exception {
         if (!this.repository.existsUserByEmail(user.getEmail())) {
-            throw new Exception("Já existe um usuário registrado com essas informações");
+            throw new BusinessException("Já existe um usuário registrado com essas informações");
         }
     }
 
     private void validateCPF(User user) throws Exception {
         if (!this.repository.existsUserByCpf(user.getCpf())) {
-            throw new Exception("Já existe um usuário registrado com essas informações");
+            throw new BusinessException("Já existe um usuário registrado com essas informações");
         }
     }
 }
