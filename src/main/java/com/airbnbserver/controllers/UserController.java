@@ -42,8 +42,8 @@ public class UserController {
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
 
-    @GetMapping("{uuid}/accommodations")
-    public ResponseEntity<List<Accommodation>> getHostAccommodations(@PathVariable("uuid") UUID userUuid) throws Exception {
+    @GetMapping("{userUuid}/accommodations")
+    public ResponseEntity<List<Accommodation>> getHostAccommodations(@PathVariable("userUuid") UUID userUuid) throws Exception {
         User host = this.service.getByUuid(userUuid);
 
         return new ResponseEntity<>(this.accommodationService.getByHost(host), HttpStatus.OK);
