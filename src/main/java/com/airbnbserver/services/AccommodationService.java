@@ -1,6 +1,7 @@
 package com.airbnbserver.services;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,5 +36,11 @@ public class AccommodationService {
 
         return this.repository.findAccommodationByHost(host)
                 .orElseThrow(() -> new Exception("Usuário não possui acomodações cadastradas"));
+    }
+
+    public Accommodation getByUuid(UUID accommodationUuid) throws Exception {
+
+        return this.repository.findAccommodationByUuid(accommodationUuid)
+                .orElseThrow(() -> new Exception("Acomodação não encontrada"));
     }
 }
